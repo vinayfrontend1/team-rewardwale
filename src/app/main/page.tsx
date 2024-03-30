@@ -1,16 +1,16 @@
 "use client";
-import React, { useState, useRef, KeyboardEvent,MutableRefObject  } from "react";
+import React, { useState, useRef, KeyboardEvent } from "react";
 import Image from "next/image";
 
 export default function Home() {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
-  const refs: React.MutableRefObject<HTMLInputElement | null>[] = [
-    useRef(null),
-    useRef(null),
-    useRef(null),
-    useRef(null),
-    useRef(null),
-    useRef(null)
+  const refs = [
+    useRef<HTMLInputElement>(null),
+    useRef<HTMLInputElement>(null),
+    useRef<HTMLInputElement>(null),
+    useRef<HTMLInputElement>(null),
+    useRef<HTMLInputElement>(null),
+    useRef<HTMLInputElement>(null),
   ];
   const [otpEntered, setOtpEntered] = useState(false);
 
@@ -22,30 +22,34 @@ export default function Home() {
     setOtp(newOtp);
 
     if (value !== "") {
-      if (index < 5 && refs[index + 1] && refs[index + 1].current) {
-        refs[index + 1]?.current.focus();
+      if (index < 5 && refs[index + 1]?.current) {
+        refs[index + 1].current!.focus();
       }
     } else {
-      if (index > 0 && refs[index - 1] && refs[index - 1].current) {
-        refs[index - 1]?.current.focus();
+      if (index > 0 && refs[index - 1]?.current) {
+        refs[index - 1].current!.focus();
       }
     }
+    
   };
 
-  const handleKeyDown = (index: number, e: KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (
+    index: number,
+    e: React.KeyboardEvent<HTMLInputElement>
+  ) => {
     if (e.key === "ArrowLeft") {
       if (index > 0 && refs[index - 1]?.current) {
-        refs[index - 1]?.current.focus();
+        refs[index - 1].current!.focus();
       }
     } else if (e.key === "ArrowRight") {
       if (index < 5 && refs[index + 1]?.current) {
-        refs[index + 1]?.current.focus();
+        refs[index + 1].current!.focus();
       }
     } else if (e.key === "Backspace") {
       const newOtp = [...otp];
       if (newOtp[index] === "" && index > 0 && refs[index - 1]?.current) {
         setTimeout(() => {
-          refs[index - 1]?.current?.focus();
+          refs[index - 1].current?.focus();
         }, 10);
       } else {
         newOtp[index] = "";
@@ -88,7 +92,7 @@ export default function Home() {
             </p>
             <div className="flex item-center mt-[8px] ">
               <img src="mobile.svg" alt="Mobile Icon" className="w-5 h-8" />
-              <p className="mt-[8px] text-md font-bold ml-[7px] flex justify-center ">
+              <p className="mt-[8px] text-md font-bold ml-[7px] flrx justify-center ">
                 +91 99999 99999
               </p>
             </div>
@@ -112,9 +116,9 @@ export default function Home() {
           </div>
 
           <div className="mt-[18px] items-center flex justify-center ">
-            <p className="text-[#6B6C75] text-sm font-medium">
+            <p className=" text-[#6B6C75] text-sm font-medium">
               {" "}
-              Didn't receive the OTP?{" "}
+              Didnt receive the OTP?{" "}
               <span className="bg-gradient-to-r from-purple-600 to-purple-400 text-transparent bg-clip-text">
                 RESEND
               </span>{" "}
