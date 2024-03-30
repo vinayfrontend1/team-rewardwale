@@ -7,7 +7,7 @@ export default function Home() {
   const [isMobileNumberEntered, setIsMobileNumberEntered] = useState(false);
 
   const handleMobileNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const number = e.target.value.replace(/\D/g, ''); 
+    const number = e.target.value.replace(/\D/g, "");
     setMobileNumber(number);
     setIsMobileNumberEntered(number.length === 10);
   };
@@ -66,7 +66,7 @@ export default function Home() {
                 placeholder="00000 00000"
                 required
                 onChange={handleMobileNumberChange}
-                value={mobileNumber} 
+                value={mobileNumber}
                 className="h-12 w-full rounded-lg border border-[#BFC0C8] px-4"
               />
             </div>
@@ -74,7 +74,7 @@ export default function Home() {
           <div className="flex justify-center mt-[47px]">
             <button
               onClick={handleGetOTP}
-              disabled={!isMobileNumberEntered} 
+              disabled={!isMobileNumberEntered}
               className={`h-12 w-full text-white font-bold py-2 px-4 rounded-lg ${
                 isMobileNumberEntered
                   ? "bg-purple-600"
