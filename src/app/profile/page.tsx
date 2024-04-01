@@ -26,7 +26,7 @@ export default function Dashboard() {
             Welcome!
         </h1>
         <p className="font-bold text-2xl sm:font-normal md:font-bold mx-auto ml-4">
-            Let's make a profile
+        <p>Let&apos;s make a profile</p>
         </p>
         <div className="relative inline-block ml-4">
             <img

@@ -1,68 +1,71 @@
 "use client";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, KeyboardEvent } from "react";
 import Image from "next/image";
-import { MutableRefObject, KeyboardEvent } from 'react';
-
 
 export default function Home() {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
-  const refs = [useRef(), useRef(), useRef(), useRef(), useRef(), useRef()];
+  const refs = [
+    useRef<HTMLInputElement>(null),
+    useRef<HTMLInputElement>(null),
+    useRef<HTMLInputElement>(null),
+    useRef<HTMLInputElement>(null),
+    useRef<HTMLInputElement>(null),
+    useRef<HTMLInputElement>(null),
+  ];
   const [otpEntered, setOtpEntered] = useState(false);
-
 
   const handleOtpChange = (index: number, value: string) => {
     if (isNaN(parseInt(value))) return;
-    
+
     const newOtp = [...otp];
     newOtp[index] = value;
     setOtp(newOtp);
-    
+
     if (value !== "") {
-      if (index < 5 && refs[index + 1] && refs[index + 1].current) {
+      if (index < 5 && refs[index + 1]?.current) {
         refs[index + 1].current!.focus();
       }
     } else {
-      if (index > 0 && refs[index - 1] && refs[index - 1].current) {
+      if (index > 0 && refs[index - 1]?.current) {
         refs[index - 1].current!.focus();
       }
     }
+    
   };
-  
-  const refs: Array<React.MutableRefObject<HTMLInputElement | null>> = [];
-  
-  const handleKeyDown = (index: number, e: KeyboardEvent<HTMLInputElement>) => {
+
+  const handleKeyDown = (
+    index: number,
+    e: React.KeyboardEvent<HTMLInputElement>
+  ) => {
     if (e.key === "ArrowLeft") {
       if (index > 0 && refs[index - 1]?.current) {
-        refs[index - 1]?.current.focus();
+        refs[index - 1].current!.focus();
       }
     } else if (e.key === "ArrowRight") {
       if (index < 5 && refs[index + 1]?.current) {
-        refs[index + 1]?.current.focus();
+        refs[index + 1].current!.focus();
       }
     } else if (e.key === "Backspace") {
       const newOtp = [...otp];
       if (newOtp[index] === "" && index > 0 && refs[index - 1]?.current) {
         setTimeout(() => {
-          refs[index - 1]?.current?.focus();
+          refs[index - 1].current?.focus();
         }, 10);
       } else {
         newOtp[index] = "";
         setOtp(newOtp);
       }
     }
-  
+
     const isOtpEntered = refs.every(
       (field) => field.current?.value.length === 1
     );
     setOtpEntered(isOtpEntered);
   };
-  
-  
 
   const handleGetOTP = () => {
     window.location.href = "/profile";
   };
-
 
   return (
     <div className="md:hidden flex flex-col flex-row justify-center items-center h-screen overflow-hidden bg-[#F0F3FC]">
@@ -97,26 +100,25 @@ export default function Home() {
 
           <div className="mt-[32px] flex justify-center items-center ml-[23px] mr-[23px]">
             {refs.map((ref, index) => (
-             <input
-             key={index}
-             type="text"
-             ref={refs[index]}
-             value={otp[index]}
-             onChange={(e) => handleOtpChange(index, e.target.value)}
-             onKeyDown={(e) => handleKeyDown(index, e)}
-             maxLength={1}
-             placeholder="0"
-             required
-             className="h-12 w-12 rounded-lg border border-[#C8A7FF] mr-1 text-center"
-           />
-           
+              <input
+                key={index}
+                type="text"
+                ref={refs[index]}
+                value={otp[index]}
+                onChange={(e) => handleOtpChange(index, e.target.value)}
+                onKeyDown={(e) => handleKeyDown(index, e)}
+                maxLength={1}
+                placeholder="0"
+                required
+                className="h-12 w-12 rounded-lg border border-[#C8A7FF] mr-1 text-center"
+              />
             ))}
           </div>
 
           <div className="mt-[18px] items-center flex justify-center ">
             <p className=" text-[#6B6C75] text-sm font-medium">
               {" "}
-              Didn't receive the OTP?{" "}
+              Didnt receive the OTP?{" "}
               <span className="bg-gradient-to-r from-purple-600 to-purple-400 text-transparent bg-clip-text">
                 RESEND
               </span>{" "}
