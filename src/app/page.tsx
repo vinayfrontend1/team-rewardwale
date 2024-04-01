@@ -95,7 +95,7 @@ export default function Home() {
       {/* Desktop-Screen */}
       <div className="hidden flex flex-col md:flex-row justify-center items-center h-screen overflow-hidden bg-[#F0F3FC] xl:flex xl:w-full 2xl:flex  2xl:w-full ">
         {/* Left Section */}
-        <div className="md:w-[50%] h-[770px] flex flex-col justify-between bg-white">
+        <div className="md:w-[50%]  flex flex-col justify-between bg-white">
           <div className="flex justify-center items-center mt-6">
             <img
               src="/desktop-images/Frame.svg"
